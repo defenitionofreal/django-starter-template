@@ -16,7 +16,8 @@ pip install -r requirements.txt
 ```
 
 Generate random secret key - https://djecrety.ir/
-Or use something like this:
+
+Or do something like this:
 ```
 from django.core.management.utils import get_random_secret_key  
 get_random_secret_key()
