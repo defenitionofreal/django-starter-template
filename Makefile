@@ -6,3 +6,9 @@ migration:
 
 superuser:
 	python manage.py createsuperuser
+
+i-req:
+	pip install -r requirements.txt
+
+r-req:
+	pip freeze > requirements.txt

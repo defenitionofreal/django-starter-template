@@ -2,7 +2,7 @@ from sys import path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
+from datetime import timedelta
 # PATHS
 # Path containing the django project (.src/project)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,6 +18,8 @@ path.append(os.path.join(PROJECT_ROOT, "apps"))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
+
+AUTH_USER_MODEL = 'base.CustomUser'
 
 SITE_ID = 1
 
@@ -35,6 +37,8 @@ CORE_APPS = [
 ]
 
 THIRD_PART_APPS = [
+    'rest_framework',
+    'corsheaders', # https://github.com/adamchainz/django-cors-headers
 
 ]
 
@@ -47,6 +51,7 @@ INSTALLED_APPS = CORE_APPS + THIRD_PART_APPS + INTERNAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware', #corsheaders
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -148,8 +153,30 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000'
-#     # the domain for front-end app(you can add more than 1)
-# ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    # 'DEFAULT_FILTER_BACKENDS': [
+    #     'django_filters.rest_framework.DjangoFilterBackend', # https://django-filter.readthedocs.io/en/stable/guide/install.html
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication', #https://medium.com/django-rest/django-rest-framework-jwt-authentication-94bee36f2af8
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
+# https://pypi.org/project/django-cors-headers/
+CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000'
+    # the domain for front-end app(you can add more than 1)
+]
