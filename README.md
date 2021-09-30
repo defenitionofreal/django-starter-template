@@ -23,4 +23,9 @@ from django.core.management.utils import get_random_secret_key
 get_random_secret_key()
 ```
 
+Different branches for different projects.
+* main branch - simple django template
+* api-jwt branch - starter template with rest framework, custom user and simple-jwt set up
+* docker/celery branch planning...
+
 **In .gitingore dont forget to uncomment .env, local.py and media !!!**
