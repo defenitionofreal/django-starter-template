@@ -9,7 +9,7 @@ app_name = 'base'
 
 router = routers.DefaultRouter()
 
-router.register(r'user', user_view.UserViewSet, basename='user')
+router.register(r'api/v1/user', user_view.UserViewSet, basename='user')
 
 urlpatterns = [
     path('', views.index, name='index'),

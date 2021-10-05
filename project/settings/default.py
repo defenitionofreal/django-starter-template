@@ -3,25 +3,15 @@ from sys import path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from datetime import timedelta
-# PATHS
-# Path containing the django project (.src/project)
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-path.append(BASE_DIR)
 
-# Path of the top level directory (.src/).
-# This directory contains the django project, apps, etc...
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
-
-# Add apps to the PROJECT_ROOT
-path.append(os.path.join(PROJECT_ROOT, "apps"))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
-
-AUTH_USER_MODEL = 'base.CustomUser'
-
-SITE_ID = 1
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -43,7 +33,7 @@ THIRD_PART_APPS = [
 ]
 
 INTERNAL_APPS = [
-    'base',
+    'apps.base',
 ]
 
 INSTALLED_APPS = CORE_APPS + THIRD_PART_APPS + INTERNAL_APPS
@@ -80,10 +70,9 @@ TEMPLATES = [
 ]
 
 TEMPLATE_DIRS = (
-                    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(os.path.dirname(__file__), 'templates'),
 )
 
-print(TEMPLATE_DIRS)
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
@@ -93,10 +82,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -132,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'public/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'public/static')
 
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
@@ -180,3 +168,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
     # the domain for front-end app(you can add more than 1)
 ]
+
+AUTH_USER_MODEL = 'base.CustomUser'
+
+SITE_ID = 1
