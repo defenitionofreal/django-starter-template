@@ -12,3 +12,21 @@ i-req:
 
 r-req:
 	pip freeze > requirements.txt
+
+fixture:
+	python manage.py dumpdata > fixtures/db.json
+
+l-fixture:
+	python manage.py loaddata fixtures/db.json
+
+dev:
+	export DJANGO_SETTINGS_MODULE=project.settings.dev
+
+local:
+	export DJANGO_SETTINGS_MODULE=project.settings.local
+
+prod:
+	export DJANGO_SETTINGS_MODULE=project.settings.prod
+
+test:
+	python manage.py test
